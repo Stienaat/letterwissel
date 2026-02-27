@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+		background-color :#F2F2F2;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+#gameContainer {
+    max-width: 100vw;
+    width: 100%;
+    box-sizing: border-box;
+
+}
+
+#grid {
+	width: 100%; 
+	max-width: 100vw;
+    display: grid;
+	box-sizing:border-box;
+    grid-template-columns: repeat(10, 30px);
+    grid-template-rows: repeat(10, 30px);
+    gap: 2px;
+    justify-content: center;
+    margin: 15px auto;
+	background-color :#FF2F2;
+	border-radius:5px;
+}
+#grid, .cell {
+    touch-action: none;
+}
+
+
+#rooster {
+    display: grid;
+    justify-content: space-between;
+	max-width: 100vw; overflow: hidden;
+	border-radius:12px;
+	background-color :#F2F2F2;
+	margin: 5px auto;
+}
+.cell {
+    background-color: #FFFFFF;
+	border: 1px solid red;
+	border-color: #4CAF50;
+    border-radius: 4px;
+    font-size: 13px;
+	color: black;
+    font-weight: light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.selected {
+    background: yellow;
+}
+
+.found {
+    background-color: #C8E6C9;          /*  groen  */
+}
+#toolbar {
+    margin: 8px;
+	max-width: 100vw; overflow: hidden;
+}
+
+#toolbar button {
+    padding: 4px 8px;
+    margin: 10px;
+	max-height:10 px;
+    font-size: 14px;
+	border: 0px solid red;
+	border-radius:6px;
+	background-color: #A52A00;
+    cursor: pointer;
+	color:white;
+}
+
+#toolbar button.active {
+    background-color: orange;
+    color: white;
+}
+
+#topbar {
+    margin: 4px 3px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.butts {
+    padding: 4px 5px;
+    margin-right: 4px;
+	background: #A52A00;
+	border: 0px;
+	color:white;
+	border-radius:8px;
+}
+.butts:hover {
+	background-color: orange;
+}
+
+#toolbar button:hover {
+	background-color: orange;
+}
+
+#score, #timer, #topscore {
+    margin: 5px 8px;
+    font-weight: normal;
+	font-size: 12px;
+}
+#modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#modal.hidden {
+    display: none;
+}
+
+#modalContent {
+    position: relative;   /* BELANGRIJK */
+    background: white;
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    text-align: left;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+#modalClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #333;
+    background: none;
+    border: none;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#logo img {
+    width: min(30vw, 60px);
+    height: auto;
+}
+
+
+@keyframes fadeIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+#fireworksCanvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2000;
+}
+
+#fireworksCanvas.hidden {
+    display: none;
+}
