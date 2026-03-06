@@ -1,4 +1,4 @@
-const CACHE_NAME = "letterwissel-v3";
+const CACHE_NAME = "letterwissel-v4";
 
 // Automatisch juiste base path bepalen
 const BASE_PATH = self.location.pathname.replace("service-worker.js", "");
@@ -31,3 +31,4 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
