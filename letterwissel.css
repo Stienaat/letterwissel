@@ -1,21 +1,134 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-		background-color :#F2F2F2;
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #E2F2F2;
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+
+}
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+#toolbar {									/* Level btn's */
+  display: flex;
+  gap: 8px 14px;
+  justify-content: center;
+}
+#statusbar {								/* Icon btn's   */
+  display: grid;
+  padding-left: 20px;
+  padding-right: 20px;
+  justify-content: center;
+  background: rgba(0, 255, 0, 0.2);
+}
+.icon-btn:hover { 
+	transform: scale(1.15); 
+	opacity: 0.8;
+}
+.icon-btn {
+    position: relative;
 }
 
-body, html {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+.icon-btn::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
 }
 
-#gameContainer {
-    max-width: 100vw;
-    width: 100%;
+.icon-btn:hover::after {
+    opacity: 1;
+}
+.message {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    height: 40px;
+    min-height: 40px;
+    flex-shrink: 0;
+    padding: 0 10px;
+    border: 1px solid #FFCC80;
     box-sizing: border-box;
-
 }
+
+.message.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#messageText {
+    height: 40px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+}
+
+#messageExtra {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.message button {
+    background: transparent;
+    border: none;
+    color: #E65100;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 4px 10px;
+    font-size: 16px;
+}
+
+.lang-select {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.lang-select button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.lang-select button img {
+    width: 20px;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.lang-select button:hover {
+    transform: scale(1.15);
+}
+
 
 #grid {
 	width: 100%; 
@@ -34,7 +147,6 @@ body, html {
     touch-action: none;
 }
 
-
 #rooster {
     display: grid;
     justify-content: space-between;
@@ -48,9 +160,9 @@ body, html {
 	border: 1px solid red;
 	border-color: #4CAF50;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 15px;
 	color: black;
-    font-weight: light;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -65,12 +177,18 @@ body, html {
 .found {
     background-color: #C8E6C9;          /*  groen  */
 }
-#toolbar {
-    margin: 8px;
-	max-width: 100vw; overflow: hidden;
+
+#buttons {					/* level btn's  */
+  display: flex;
+  align-items: center; 
+  gap: 50px;
+  margin: 15px;
+  height: 28px;
+  justify-content: center;
+  width: min(90vw, 420px);
 }
 
-#toolbar button {
+#toolbar button {				/* levels */
     padding: 4px 8px;
     margin: 10px;
 	max-height:10 px;
@@ -87,10 +205,16 @@ body, html {
     color: white;
 }
 
-#topbar {
-    margin: 4px 3px;
-	display: flex;
-	justify-content: space-between;
+.icon-btn {
+    width: 15px;
+    height: auto;
+    padding: 0;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	cursor:pointer;	
 }
 
 .butts {
@@ -157,12 +281,22 @@ body, html {
     font-size: 22px;
     cursor: pointer;
 }
-
+#logo {
+    width: min(30vw, 60px);
+    height: auto;
+	padding: 2px 0;
+}
 #logo img {
     width: min(30vw, 60px);
     height: auto;
 }
-
+.toolbar4 {										/* LogoFS   */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+}
 
 @keyframes fadeIn {
     from { transform: scale(0.9); opacity: 0; }
@@ -176,5 +310,8 @@ body, html {
 }
 
 #fireworksCanvas.hidden {
+    display: none;
+}
+.hidden {
     display: none;
 }
