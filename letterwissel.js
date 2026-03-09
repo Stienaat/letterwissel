@@ -173,7 +173,7 @@ function saveTopScores() {
 }
 
 function updateTopScoreDisplay() {
-  document.getElementById("topscore").textContent =
+  document.getElementById("topScores").textContent =
     t("top") + " L" + level + ": " + (topScores[level] ?? "-");
 }
 
