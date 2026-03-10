@@ -1,7 +1,8 @@
 {
   "name": "Letterwissel",
   "short_name": "Letterwissel",
-  "start_url": "index.html",
+  "start_url": "/Letterwissel/index.html",
+  "scope": "/Letterwissel/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4CAF50",

@@ -35,6 +35,13 @@ let topScores = { 1: null, 2: null, 3: null, 4: null, 5: null };
 
 let longPressTimer = null;
 let longPressTriggered = false;
+let swapUitgevoerd = false;
+
+document.addEventListener('touchmove', function (e) {
+    if (e.scale !== 1) {
+        e.preventDefault();
+    }
+}, { passive: false });
 
 /* =========================
    2. I18N HELPERS
@@ -173,9 +180,13 @@ function saveTopScores() {
 }
 
 function updateTopScoreDisplay() {
-  document.getElementById("topScores").textContent =
+  const el = document.getElementById("topScores");
+  if (!el) return; // UI nog niet klaar → NIET crashen
+
+  el.textContent =
     t("top") + " L" + level + ": " + (topScores[level] ?? "-");
 }
+
 
 function updateTopScoreIfNeeded() {
   if (topScores[level] === null || strafpunten < topScores[level]) {
@@ -359,6 +370,9 @@ function swapCells(cell1, cell2) {
   const r2 = parseInt(cell2.dataset.row);
   const c2 = parseInt(cell2.dataset.col);
 
+swapUitgevoerd = true;
+
+
   laatsteZet = {
     from: { r: r1, c: c1, letter: grid[r1][c1] },
     to: { r: r2, c: c2, letter: grid[r2][c2] }
@@ -381,9 +395,9 @@ function controleerWoorden() {
     }
   }
 
-  if (laatsteZet) {
-    const key = cellKey(laatsteZet.from.r, laatsteZet.from.c);
-    vasteCellen.delete(key);
+ if (swapUitgevoerd && laatsteZet) {
+    swapUitgevoerd = false;
+
 
     const cell = getCell(laatsteZet.from.r, laatsteZet.from.c);
     if (cell) {
@@ -407,11 +421,13 @@ function controleerWoorden() {
     }
   }
 
-  if (checkWin()) {
+if (checkWin()) {
+    saveGame(); // <-- toevoegen
     clearInterval(timerInterval);
     updateTopScoreIfNeeded();
     startFireworks();
-  }
+}
+
 }
 
 function doeSwap(cell1, cell2) {
@@ -509,6 +525,7 @@ async function switchLanguage(langCode) {
   woordBag = new ShuffleBagCooldown(woordenLijst, 3);
   maakGrid();
   clearMessage();
+  
 }
 
 function chooseLanguage() {
@@ -592,26 +609,28 @@ function initToolbar() {
       const newLevel = Number(btn.dataset.level);
       if (level === newLevel) return;
 
-      showMessage(
-        t("confirmNewGame"),
-        `
-          <div class="confirm-box">
-            <button id="confirmYes">${t("confirmYes")}</button>
-            <button id="confirmNo">${t("confirmNo")}</button>
-          </div>
-        `
-      );
+	showMessage(
+	  t("confirmNewGame"),
+	  `
+		<div class="confirm-box">
+		  <button id="confirmYes" class="confirm-btn confirm-yes">${t("confirmYes")}</button>
+		  <button id="confirmNo" class="confirm-btn confirm-no">${t("confirmNo")}</button>
+		</div>
+	  `
+	);
 
-      document.getElementById("confirmYes").onclick = () => {
-        level = newLevel;
+document.getElementById("confirmYes").onclick = () => {
+    level = newLevel;
 
-        buttons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
+    buttons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-        updateTopScoreDisplay();
-        maakGrid();
-        clearMessage();
-      };
+    updateTopScoreDisplay();
+    maakGrid();
+
+   showMessage(t("defaultMessage"));
+};
+
 
       document.getElementById("confirmNo").onclick = clearMessage;
     });

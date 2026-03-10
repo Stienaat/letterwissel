@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/icon-192b.png">
     <link rel="manifest" href="manifest.json">
 
     <link rel="stylesheet" href="letterwissel.css">
@@ -70,8 +70,6 @@
     </div>
 </main>
 
-<canvas id="fireworksCanvas" class="hidden"></canvas>
-
 <!-- Modal -->
 <div id="modal" class="hidden">
     <div id="modalContent">
@@ -90,6 +88,12 @@
 <!-- i18n-module eerst, dan je game-logic -->
 <script src="i18n.js"></script>
 <script src="letterwissel.js"></script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("serviceworker.js");
+  }
+</script>
 
 </body>
 </html>

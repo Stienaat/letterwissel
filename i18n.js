@@ -163,6 +163,12 @@ function applyTranslations() {
     }
   });
 }
+// After applying normal translations
+const msg = document.getElementById("messageText");
+if (msg && msg.textContent.trim() === "") {
+    msg.textContent = translations[currentLang].defaultMessage;
+}
+
 
 // ---- 4. Change language ----
 function setLanguage(lang) {
