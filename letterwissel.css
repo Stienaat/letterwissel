@@ -46,8 +46,8 @@ body {
   width: 100%;
   height: auto;
   box-sizing: border-box;
-  padding: 4px 5px;
-  line-height: 1.2; 
+  padding: 4px 4px;
+  line-height: 1.0; 
   background: rgba(0, 255, 0, 0.2);
   overflow-x: hidden;
 }
