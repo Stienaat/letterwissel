@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Letterwissel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="apple-touch-icon" href="icons/icon-192b.png">
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" href="letterwissel.css">
+</head>
+
+<body>
+
+<main class="container">
+    <!-- Titel via i18n -->
+    <h2 style="margin:0px" data-i18n="title">Letter wissel</h2>
+
+    <div class="game-wrapper">
+        <div id="toolbar">
+            <button data-level="1">Lev1</button>
+            <button data-level="2">Lev2</button>
+            <button data-level="3">Lev3</button>
+            <button data-level="4">Lev4</button>
+            <button data-level="5">Lev5</button>
+        </div>
+
+        <div id="statusbar">
+            <div id="buttons">
+                <button id="nieuwBtn" class="icon-btn" data-tip="Nieuw spel">
+                    <img src="images/new.png" alt="Nieuw">
+                </button>
+                <button id="helpBtn" class="icon-btn" data-tip="Info">
+                    <img src="images/info.png" alt="Info">
+                </button>
+                <!-- Taal-knop blijft NL-vlag, i18n regelt tekst elders -->
+                <button id="langBtn" class="icon-btn" data-tip="Taal">
+                    <img src="images/NL.png" alt="Taal">
+                </button>
+
+                <!-- Timer / score / top voorlopig ongewijzigd om JS niet te breken -->
+                <span id="timer">T: 00:00</span>
+                <span id="score">Pt'n: 0</span>
+                <span id="topscore">Top L1: -</span>
+            </div>
+        </div>
+
+        <div id="messageBar" class="message">
+			<span id="messageText"></span>
+			<div id="messageExtra"></div>
+		</div>
+
+
+
+        <div id="grid"></div>
+
+        <div class="toolbar4">
+            <img src="images/logoFS.png" alt="FS Creations">
+            <h6 style="font-weight: normal; font-style:italic; margin: 0px;"
+                data-i18n="footer">
+                © 2026 FS creations. All rights reserved. Not for commercial use.
+            </h6>
+        </div>
+    </div>
+</main>
+
+<!-- Modal -->
+<div id="modal" class="hidden">
+    <div id="modalContent">
+        <h6>V2.1</h6>
+        <button id="modalClose" style="margin:10px;">
+            <img src="images/sluiten.png" alt="close">
+        </button>
+        <!-- ModalBody wordt door JS gevuld; geen i18n hier om dat niet te breken -->
+        <div id="modalBody"></div>
+        <img style="height: 30px;" src="images/logoFS.png" alt="FS Creations">
+    </div>
+</div>
+
+<canvas id="fireworksCanvas" class="hidden"></canvas>
+
+<!-- i18n-module eerst, dan je game-logic -->
+<script src="i18n.js"></script>
+<script src="letterwissel.js"></script>
+
+</body>
+</html>
