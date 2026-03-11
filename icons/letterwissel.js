@@ -31,7 +31,7 @@ let timerGestart = false;
 let timerInterval = null;
 
 let woordenBestand = "woorden.txt";
-let topScores = { 1: null, 2: null, 3: null, 4: null, 5: null };
+let topScore = { 1: 500, 2: null, 3: null, 4: null, 5: null };
 
 let longPressTimer = null;
 let longPressTriggered = false;
@@ -170,43 +170,43 @@ function voegHintPuntenToe() {
   updateScore();
 }
 
-function loadTopScores() {
-  const saved = localStorage.getItem("letterwissel_topscores");
-  if (saved) topScores = JSON.parse(saved);
+function loadtopScore() {
+  const saved = localStorage.getItem("letterwissel_topScore");
+  if (saved) topScore = JSON.parse(saved);
 }
 
-function saveTopScores() {
-  localStorage.setItem("letterwissel_topscores", JSON.stringify(topScores));
+function savetopScore() {
+  localStorage.setItem("letterwissel_topScore", JSON.stringify(topScore));
 }
 
-function updateTopScoreDisplay() {
-  const el = document.getElementById("topScores");
+function updatetopScoreDisplay() {
+  const el = document.getElementById("topScore");
   if (!el) return; // UI nog niet klaar → NIET crashen
 
   el.textContent =
-    t("top") + " L" + level + ": " + (topScores[level] ?? "-");
+    t("Top") + " L" + level + ": " + (topScore[level] ?? "-");
 }
 
 
-function updateTopScoreIfNeeded() {
-  if (topScores[level] === null || strafpunten < topScores[level]) {
-    topScores[level] = strafpunten;
-    saveTopScores();
-    updateTopScoreDisplay();
+function updatetopScoreIfNeeded() {
+  if (topScore[level] === null || strafpunten < topScore[level]) {
+    topScore[level] = strafpunten;
+    savetopScore();
+    updatetopScoreDisplay();
   }
 }
 
-function bindTopscoreReset() {
-  const el = document.getElementById("topscore");
-  const clone = el.cloneNode(true);
-  el.parentNode.replaceChild(clone, el);
+function bindtopScoreReset() {
+  const el = document.getElementById("topScore");
+  if (!el) return;
 
-  clone.addEventListener("dblclick", () => {
-    topScores[level] = null;
-    saveTopScores();
-    updateTopScoreDisplay();
+  el.addEventListener("dblclick", () => {
+    topScore[level] = null;
+    savetopScore();
+    updatetopScoreDisplay();
   });
 }
+
 
 function saveGame() {
   localStorage.setItem("letterwissel_save", JSON.stringify({
@@ -258,6 +258,10 @@ function getCell(r, c) {
 function updateCell(r, c) {
   const cell = getCell(r, c);
   if (cell) cell.textContent = grid[r][c];
+  const key = cellKey(r, c);
+  if (vasteCellen.has(key)) {
+    cell.classList.add("fixed", "hint");
+  }
 }
 
 function lockCell(r, c) {
@@ -340,9 +344,9 @@ function maakGrid() {
   vasteCellen = new Set(vastePosities);
 
   renderGrid();
-  loadTopScores();
-  updateTopScoreDisplay();
-  bindTopscoreReset();
+  loadtopScore();
+  updatetopScoreDisplay();
+  bindtopScoreReset();
 }
 
 /* =========================
@@ -424,7 +428,7 @@ function controleerWoorden() {
 if (checkWin()) {
     saveGame(); // <-- toevoegen
     clearInterval(timerInterval);
-    updateTopScoreIfNeeded();
+    updatetopScoreIfNeeded();
     startFireworks();
 }
 
@@ -529,7 +533,6 @@ async function switchLanguage(langCode) {
 }
 
 function chooseLanguage() {
-
   showMessage(
     t("language"),
     `
@@ -538,8 +541,7 @@ function chooseLanguage() {
         <button data-lang="fr"><img src="images/FR.png" alt="FR"></button>
         <button data-lang="en"><img src="images/EN.png" alt="EN"></button>
         <button data-lang="de"><img src="images/DE.png" alt="DE"></button>
-      </div>
-    `
+      </div>    `
   );
 
   document.querySelectorAll(".lang-select button").forEach(btn => {
@@ -625,7 +627,7 @@ document.getElementById("confirmYes").onclick = () => {
     buttons.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
 
-    updateTopScoreDisplay();
+    updatetopScoreDisplay();
     maakGrid();
 
    showMessage(t("defaultMessage"));
@@ -685,7 +687,7 @@ function bindStaticUI() {
 
 async function startGame() {
   await laadWoorden();
-  loadTopScores();
+  loadtopScore();
 
   const loaded = loadGame();
   initToolbar();
@@ -695,9 +697,9 @@ async function startGame() {
     saveGame();
   }
 
-  loadTopScores();
-  updateTopScoreDisplay();
-  bindTopscoreReset();
+  loadtopScore();
+  updatetopScoreDisplay();
+  bindtopScoreReset();
   clearMessage();
 }
 
