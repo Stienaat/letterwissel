@@ -57,7 +57,7 @@ body {
 #buttons {								/* statusbar btn's  */
   display: flex;
   align-items: center; 
-  gap: 30px;
+  gap: 25px;
   margin: 15px;
   height: 28px;
   justify-content: left;
@@ -295,4 +295,5 @@ body {
   background-color: #f44336;
   color: white;
 }
+
 
