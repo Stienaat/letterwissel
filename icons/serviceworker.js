@@ -1,4 +1,4 @@
-const CACHE_NAME = "letterwissel-v13";
+const CACHE_NAME = "letterwissel-v14";
 
 const FILES_TO_CACHE = [
   "/Letterwissel/",
@@ -57,3 +57,4 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
