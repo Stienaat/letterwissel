@@ -11,15 +11,15 @@ const translations = {
     points: "Ptn",
     top: "Top",
     howToPlay: "Hoe speel je dit?",
-    infoHint: "Klik op info voor meer uitleg.",
+    infoHint: "  → Klik op info.",
     close: "Sluiten",
-    language: "Taal",
+    language: "Kies een taal",
     footer: "© 2026 FS creations. Alle rechten voorbehouden. Niet voor commercieel gebruik.",
 
-    confirmNewGame: "Wil u een nieuw spel?",
+    confirmNewGame: "Wil je een nieuw spel?",
     confirmYes: "Ja",
     confirmNo: "Neen",
-    defaultMessage: "Hoe speel je dit? Klik op info voor wat uitleg.",
+    defaultMessage: "Hoe speel je dit?  → Klik op info.",
     modalInfoTitle: "Hoe speel je dit spel?",
     modalInfoBody: `
 	• Ieder spel is altijd oplosbaar.<br>
@@ -46,7 +46,7 @@ const translations = {
     points: "Pts",
     top: "Top",
     howToPlay: "How to play?",
-    infoHint: "Click info for more explanation.",
+    infoHint: " →  Click info.",
     close: "Close",
     language: "Language",
     footer: "© 2026 FS creations. All rights reserved. Not for commercial use.",
@@ -54,7 +54,7 @@ const translations = {
     confirmNewGame: "Do you want to start a new game?",
     confirmYes: "Yes",
     confirmNo: "No",
-    defaultMessage: "How to play? Click info for more explanation.",
+    defaultMessage: "How to play?  → Click info.",
     modalInfoTitle: "How to play this game?",
     modalInfoBody: `
 	• Every puzzle is always solvable.<br>
@@ -80,7 +80,7 @@ const translations = {
     points: "Pts",
     top: "Top",
     howToPlay: "Comment jouer?",
-    infoHint: "Cliquez sur info pour plus d'explications.",
+    infoHint: " →  Cliquez sur info.",
     close: "Fermer",
     language: "Langue",
     footer: "© 2026 FS creations. Tous droits réservés. Pas pour un usage commercial.",
