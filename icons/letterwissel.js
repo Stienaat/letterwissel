@@ -1,5 +1,5 @@
 /* =========================================================
-   LETTERWISSEL — Stage 3b
+   LETTERWISSEL — nieuwe versie
    Echte compactere refactor, zonder spelregels te wijzigen
    ========================================================= */
 

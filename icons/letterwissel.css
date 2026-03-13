@@ -18,11 +18,14 @@ body {
     flex-direction: column;
     margin-top: 2px;
     margin-bottom: 2px;
+	border: 1px solid red;
+	border-radius: 10px;
 }
 #toolbar {								/* Level bar */
   display: flex;
-  gap: 8px;
-  justify-content: center;
+  justify-content: space-between;
+  padding-left : 30px;
+  padding-right : 30px;
 }
 
 #toolbar button {					/* levels buttons */
@@ -43,25 +46,23 @@ body {
 }
 
 #statusbar {
-  width: 85%;
-  max-width: 100vw;
-  margin-left: 30px;
-  height: auto;
-  box-sizing: border-box;
-  padding-left: 15px;
-  line-height: 1.25; 
-  background: rgba(0, 255, 0, 0.2);
-  overflow-x: hidden;
+	display: flex;
+	flex-direction: row;
+    align-items: center;
+	padding:5px 20px 5px 20px;
+	height: 68px;
+    justify-content: space-between; /* of 'flex-start' als je ze links wil */
+    gap: 2px; /* optioneel: ruimte tussen items */
+	background: rgba(0, 255, 0, 0.2);
 }
 
-#buttons {								/* statusbar btn's  */
-  display: flex;
-  align-items: center; 
-  gap: 25px;
-  margin: 15px;
-  height: 28px;
-  justify-content: left;
-  width: min(100vw,250px);
+.icon-btn {
+ 
+  margin: 10px;
+  height: 30px;
+  max-width: 30px;
+  border: 0px;
+  background-color: transparent;
 }
 
 .icon-btn:hover { 
@@ -72,14 +73,11 @@ body {
 #messageBar {
     display: flex;
     justify-content: space-between;
-	width: 80%;
-	max-width: 100vw;
-    margin-left: 30px;
     gap: 8px;
     flex-shrink: 0;
     padding-left: 10px;
 	padding-right: 10px;
-    border: 1px solid #FFCC80;
+    border: 1px solid #FFCC80;   
    
 }
 
@@ -126,9 +124,9 @@ body {
 	max-width: 100vw;
     display: grid;
 	box-sizing:border-box;
-    grid-template-columns: repeat(10, 30px);
-    grid-template-rows: repeat(10, 30px);
-    gap: 2px;
+    grid-template-columns: repeat(10, 38px);
+    grid-template-rows: repeat(10, 38px);
+    gap: 3px;
     justify-content: center;
     margin: 15px auto;
 	background-color :#FF2F2;
@@ -140,9 +138,8 @@ body {
 
 .cell {
     background-color: #FFFFFF;
-	border: 1px solid red;
-	border-color: #4CAF50;
-    border-radius: 4px;
+	border: 1px solid red;	
+    border-radius: 6px;
     font-size: 15px;
 	color: black;
     font-weight: bold;
@@ -159,30 +156,6 @@ body {
 
 .found {
     background-color: #C8E6C9;          /*  groen  */
-}
-
-.icon-btn {
-    width: 15px;
-    height: auto;
-    padding: 0;
-    border: none;
-    background: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-	cursor:pointer;	
-}
-
-.butts {
-    padding: 4px 5px;
-    margin-right: 4px;
-	background: #A52A00;
-	border: 0px;
-	color:white;
-	border-radius:8px;
-}
-.butts:hover {
-	background-color: orange;
 }
 
 #toolbar button:hover {
@@ -295,5 +268,4 @@ body {
   background-color: #f44336;
   color: white;
 }
-
 
