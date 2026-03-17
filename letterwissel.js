@@ -615,13 +615,26 @@ function initToolbar() {
 	  t("confirmNewGame"),
 	  `
 		<div class="confirm-box">
-		  <button id="confirmYes" class="confirm-btn confirm-yes">${t("confirmYes")}</button>
-		  <button id="confirmNo" class="confirm-btn confirm-no">${t("confirmNo")}</button>
+			<button id="jaBtn" class="btn btn-green">Ja</button>
+			<button id="neeBtn" class="btn btn-red">Nee</button>
 		</div>
 	  `
 	);
 
-document.getElementById("confirmYes").onclick = () => {
+document.getElementById("jaBtn").onclick = () => {
+    level = newLevel;
+
+    buttons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    updatetopScoreDisplay();
+    maakGrid();
+
+    showMessage(t("defaultMessage"));
+  resetTimer();
+    strafpunten = 0;
+    updateScore();
+
     level = newLevel;
 
     buttons.forEach(b => b.classList.remove("active"));
@@ -631,6 +644,9 @@ document.getElementById("confirmYes").onclick = () => {
     maakGrid();
 
    showMessage(t("defaultMessage"));
+};
+document.getElementById("neeBtn").onclick = () => {
+    showMessage(t("defaultMessage"));
 };
 
 
@@ -646,7 +662,6 @@ function bindStaticUI() {
   document.getElementById("nieuwBtn").addEventListener("click", () => {
     clearInterval(timerInterval);
     resetTimer();
-
     strafpunten = 0;
     updateScore();
 
