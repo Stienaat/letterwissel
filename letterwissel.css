@@ -170,8 +170,8 @@ body {
 --------------------------------------------------------- */
 #grid {
   display: grid;
-  grid-template-columns: repeat(10, 35px);
-  grid-template-rows: repeat(10, 35px);
+  grid-template-columns: repeat(10, 34px);
+  grid-template-rows: repeat(10, 34px);
   gap: 3px;
   justify-content: center;
   margin: 5px auto;
