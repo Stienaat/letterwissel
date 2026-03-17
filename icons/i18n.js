@@ -85,10 +85,10 @@ const translations = {
     language: "Langue",
     footer: "© 2026 FS creations. Tous droits réservés. Pas pour un usage commercial.",
 
-    confirmNewGame: "Voulez-vous commencer une nouvelle partie?",
+    confirmNewGame: "Voulez-vous recommencer ?",
     confirmYes: "Oui",
     confirmNo: "Non",
-    defaultMessage: "Comment jouer? Cliquez sur info pour plus d'explications.",
+    defaultMessage: "Comment jouer?  →  Cliquez sur info.",
     modalInfoTitle: "Comment jouer ce jeu?",
     modalInfoBody:`
 	• Chaque puzzle est toujours solvable.<br>
@@ -114,15 +114,15 @@ const translations = {
     points: "Pkt",
     top: "Top",
     howToPlay: "Wie spielt man das?",
-    infoHint: "Klicken Sie auf Info für mehr Erklärung.",
+  
     close: "Schließen",
     language: "Sprache",
     footer: "© 2026 FS creations. Alle Rechte vorbehalten. Nicht für kommerzielle Nutzung.",
 
-    confirmNewGame: "Möchten Sie ein neues Spiel starten?",
+    confirmNewGame: "Möchten Sie ein neues Spiel ?",
     confirmYes: "Ja",
     confirmNo: "Nein",
-    defaultMessage: "Wie spielt man das? Klicken Sie auf Info für mehr Erklärung.",
+    defaultMessage: "Wie spielt man das? Klicken Sie auf Info.",
     modalInfoTitle: "Wie spielt man das?",
     modalInfoBody: `
 	• Jedes Puzzle ist immer lösbar.<br>

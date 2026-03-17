@@ -31,8 +31,8 @@
             <button data-level="5">Lev5</button>
         </div>
 
-        <div id="statusbar">
-         
+        <div class="toolbar2">
+			<div class="tb-left">			
                 <button id="nieuwBtn" class="icon-btn" data-tip="Nieuw spel">
                     <img src="images/new.png" alt="Nieuw">
                 </button>
@@ -43,12 +43,12 @@
                 <button id="langBtn" class="icon-btn" data-tip="Taal">
                     <img src="images/NL.png" alt="Taal">
                 </button>
-
-                <!-- Timer / score / top voorlopig ongewijzigd om JS niet te breken -->
-                <span id="timer">T: 00:00</span>
+			</div>		
+            <div class="tb-right">		    
+				<span id="timer">T: 00:00</span>
                 <span id="score">Pt'n: 0</span>
                 <span id="topScore">Top L1: -</span>
-       
+			</div>
         </div>
 
         <div id="messageBar" >
@@ -73,7 +73,7 @@
 <!-- Modal -->
 <div id="modal" class="hidden">
     <div id="modalContent">
-        <h6>V2.2</h6>
+        <h6>V2.3</h6>
         <button id="modalClose" style="margin:10px;">
             <img src="images/sluiten.png" alt="close">
         </button>
