@@ -1,0 +1,285 @@
+/* ---------------------------------------------------------
+   BASIS
+--------------------------------------------------------- */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #E2F2F2;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.game-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 2px 0;
+  border: 1px solid red;
+  border-radius: 10px;
+}
+
+/* ---------------------------------------------------------
+   TOOLBAR 1 — LEVEL BUTTONS
+--------------------------------------------------------- */
+#toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#toolbar button {
+  padding: 4px 10px;
+  margin: 10px 0;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  background-color: #A52A00;
+  color: white;
+  cursor: pointer;
+}
+
+#toolbar button:hover {
+  background-color: orange;
+}
+
+#toolbar button.active {
+  background-color: orange;
+  color: white;
+}
+
+/* ---------------------------------------------------------
+   STATUSBAR (ICONS + SCORE)
+--------------------------------------------------------- */
+.toolbar2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+	height: 60px;
+	margin-left: 0px;
+    background: rgba(0, 255, 0, 0.2); 
+}
+
+.tb-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px; /* of jouw spacing */
+  
+}
+
+.tb-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.icon-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  justify-content: center;
+  margin: 5px;
+  border: none;
+  background: transparent;
+}
+
+.icon-btn:hover {
+  transform: scale(1.15);
+  opacity: 0.8;
+}
+
+/* ---------------------------------------------------------
+   MESSAGE BAR + UNIFORM CONFIRM BUTTONS
+--------------------------------------------------------- */
+#messageBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 330px;
+  margin: 0 auto;
+  padding: 5px;
+  height: 40px;
+  border: 1px solid orange;
+}
+
+#message.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#messageText {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* Uniform buttons (zoals Letterswap) */
+.btn {
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-green { background: #2ecc71; color: white; }
+.btn-red   { background: #e74c3c; color: white; }
+
+/* ---------------------------------------------------------
+   TAALVLAGGEN
+--------------------------------------------------------- */
+.lang-select {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.lang-select button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.lang-select button img {
+  width: 22px;
+  height: 22px;
+  object-fit: cover;
+}
+
+.lang-select button:hover {
+  transform: scale(1.15);
+}
+
+/* ---------------------------------------------------------
+   GRID
+--------------------------------------------------------- */
+#grid {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(10, 30px);
+  gap: 3px;
+  justify-content: center;
+  margin: 12px;
+  background-color: lightblue;
+  border-radius: 5px;
+}
+
+.cell {
+  background-color: #FFFFFF;
+  border: 1px solid #0077ff;
+  border-radius: 6px;
+  font-size: 18px;
+  color: black;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.selected {
+  background: orange;
+}
+
+.found {
+  background-color: #C8E6C9;
+}
+
+/* ---------------------------------------------------------
+   SCORE + TIMER
+--------------------------------------------------------- */
+#score, #timer, #topScore {
+  margin: 5px 8px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* ---------------------------------------------------------
+   MODAL (uniform met Letterswap)
+--------------------------------------------------------- */
+#modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#modal.hidden {
+  display: none;
+}
+
+#modalContent {
+  font-size: 12px;
+  position: relative;
+  background: white;
+  padding: 25px;
+  width: 90%;
+  max-width: 300px;
+  border-radius: 10px;
+  text-align: left;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+#modalClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 22px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #333;
+}
+
+/* ---------------------------------------------------------
+   LOGOFS
+--------------------------------------------------------- */
+.toolbar4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------
+   FIREWORKS
+--------------------------------------------------------- */
+#fireworksCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2000;
+}
+
+#fireworksCanvas.hidden {
+  display: none;
+}
+
+/* ---------------------------------------------------------
+   ANIMATIE
+--------------------------------------------------------- */
+@keyframes fadeIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
