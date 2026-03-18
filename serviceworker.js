@@ -1,11 +1,11 @@
-const CACHE_NAME = "letterwissel-v13";
+const CACHE_NAME = "letterwissel-v14";
 
 const FILES_TO_CACHE = [
   "/Letterwissel/",
   "/Letterwissel/index.html",
-  "/Letterwissel/letterwissel.css",
-  "/Letterwissel/letterwissel.js",
-  "/Letterwissel/i18n.js",
+  "/Letterwissel/lwissel.css",
+  "/Letterwissel/lwissel.js",
+  "/Letterwissel/strings.js",
   "/Letterwissel/woorden.txt",
   "/Letterwissel/woorden_de.txt",
   "/Letterwissel/woorden_fr.txt",
