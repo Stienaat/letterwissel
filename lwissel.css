@@ -72,7 +72,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5px; /* of jouw spacing */
+    gap: 4px; /* of jouw spacing */
   
 }
 
@@ -80,7 +80,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5px;
+    gap: 2px;
 
 }
 
