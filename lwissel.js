@@ -1,47 +1,65 @@
-/* =========================================================
-   LETTERWISSEL — nieuwe versie
-   Echte compactere refactor, zonder spelregels te wijzigen
-   ========================================================= */
-
 /* =========================
    1. CONFIG & STATE
    ========================= */
-
 const gridSize = 10;
 const LONG_PRESS_TIME = 500;
-
-/* Mogelijk overbodig: momenteel nergens gebruikt */
-let gevondenWoorden = new Set();
-
+const N = 10;
 let grid = [];
 let oplossing = [];
 let woordenLijst = [];
 let woordBag = null;
-
 let selectedCell = null;
 let level = 1;
 let vasteCellen = new Set();
 let correcteCellen = new Set();
 let hintLetters = new Set();
 let laatsteZet = null;
-
 let strafpunten = 0;
 let seconden = 0;
 let timerGestart = false;
 let timerInterval = null;
-
 let woordenBestand = "woorden.txt";
 let topScore = { 1: 500, 2: null, 3: null, 4: null, 5: null };
-
 let longPressTimer = null;
 let longPressTriggered = false;
 let swapUitgevoerd = false;
+
+
+let debugVisible = false;
+
+/*DEBUGGER*/
+function toggleDebug() {
+    debugVisible = !debugVisible;
+    document.getElementById("debugPanel").style.display = debugVisible ? "block" : "none";
+    if (debugVisible) updateDebugPanel();
+}
+function updateDebugPanel() {
+    if (!debugVisible) return;
+
+    const panel = document.getElementById("debugPanel");
+
+    panel.innerHTML = `
+        <b>DEBUG</b><br>
+    timerGestart: ${timerGestart}<br>
+		seconden: ${seconden}<br>
+		strafpunten: ${strafpunten}<br>	
+        currentLanguage: ${currentLang}<br>
+    
+    `;
+}
 
 document.addEventListener('touchmove', function (e) {
     if (e.scale !== 1) {
         e.preventDefault();
     }
 }, { passive: false });
+
+function randomSide() {
+  const sides = ["L", "R", "O", "B"]; // Links, Rechts, Boven, Beneden
+  return sides[Math.floor(Math.random() * sides.length)];
+}
+
+
 
 /* =========================
    2. I18N HELPERS
@@ -113,7 +131,6 @@ async function laadWoorden() {
     .split(/\r?\n/)
     .map(w => w.trim().toUpperCase())
     .filter(Boolean);
-
   woordBag = new ShuffleBagCooldown(woordenLijst, 3);
 }
 
@@ -187,7 +204,6 @@ function updatetopScoreDisplay() {
     t("Top") + " L" + level + ": " + (topScore[level] ?? "-");
 }
 
-
 function updatetopScoreIfNeeded() {
   if (topScore[level] === null || strafpunten < topScore[level]) {
     topScore[level] = strafpunten;
@@ -206,7 +222,6 @@ function bindtopScoreReset() {
     updatetopScoreDisplay();
   });
 }
-
 
 function saveGame() {
   localStorage.setItem("letterwissel_save", JSON.stringify({
@@ -604,71 +619,55 @@ function pointerUp(e) {
 }
 
 function initToolbar() {
- const buttons = document.querySelectorAll("#toolbar button[data-level]");
+  const buttons = document.querySelectorAll("#toolbar button[data-level]");
 
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
       const newLevel = Number(btn.dataset.level);
       if (level === newLevel) return;
 
-	showMessage(
-	  t("confirmNewGame"),
-	  `
-		<div class="confirm-box">
-			<button id="jaBtn" class="btn btn-green">Ja</button>
-			<button id="neeBtn" class="btn btn-red">Nee</button>
-		</div>
-	  `
-	);
+      showMessage(
+        t("confirmNewGame"),
+        `
+          <div class="confirm-box">
+            <button id="jaBtn" class="btn btn-green">Ja</button>
+            <button id="neeBtn" class="btn btn-red">Nee</button>
+          </div>
+        `
+      );
 
-document.getElementById("jaBtn").onclick = () => {
-    level = newLevel;
+      setTimeout(() => {
+        const ja = document.getElementById("jaBtn");
+        const nee = document.getElementById("neeBtn");
 
-    buttons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+        if (!ja || !nee) return;
 
-    updatetopScoreDisplay();
-    maakGrid();
+       ja.onclick = () => {
+		  level = newLevel;
 
-    showMessage(t("defaultMessage"));
-	resetTimer();
-    strafpunten = 0;
-    updateScore();
+		  // UI updaten
+		  buttons.forEach(b => b.classList.remove("active"));
+		  btn.classList.add("active");
 
-    level = newLevel;
-
-    buttons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    updatetopScoreDisplay();
-    maakGrid();
-
-    showMessage(t("defaultMessage"));
-};
-document.getElementById("neeBtn").onclick = () => {
-    showMessage(t("defaultMessage"));
-};
+		  clearMessage();   // <-- DIT is de fix
+		  nieuwSpel();
+		};
 
 
-      document.getElementById("confirmNo").onclick = clearMessage;
+        nee.onclick = () => {
+          showMessage(t("defaultMessage"));
+        };
+      }, 0);
     });
   });
-
-  const startBtn = document.querySelector(`#toolbar button[data-level='${level}']`);
-  if (startBtn) startBtn.classList.add("active");
 }
 
-function bindStaticUI() {
-  document.getElementById("nieuwBtn").addEventListener("click", () => {
-    clearInterval(timerInterval);
-    resetTimer();
-    strafpunten = 0;
-    updateScore();
 
-    woordBag = new ShuffleBagCooldown(woordenLijst, 3);
-    maakGrid();
-    saveGame();
-  });
+function bindStaticUI() {
+document.getElementById("nieuwBtn").onclick = () => {
+  nieuwSpel();
+};
+
 
   document.getElementById("helpBtn").addEventListener("click", () => {
     openModal(`
@@ -704,18 +703,62 @@ async function startGame() {
   await laadWoorden();
   loadtopScore();
 
-  const loaded = loadGame();
-  initToolbar();
+  const loaded = loadGame();   // verder spelen
 
   if (!loaded) {
-    maakGrid();
-    saveGame();
+    nieuwSpel();               // eerste keer → nieuw spel
+    return;
   }
 
-  loadtopScore();
+  // verder spelen
   updatetopScoreDisplay();
   bindtopScoreReset();
   clearMessage();
+}
+
+async function nieuwSpel() {
+  strafpunten = 0;
+  seconden = 0;
+  timerGestart = false;
+  updateScore();
+
+  woordBag = new ShuffleBagCooldown(woordenLijst, 3);
+
+  maakGrid();
+  renderGrid(); // letters staan erin
+
+  // letters verbergen
+  document.querySelectorAll("#grid .cell")
+    .forEach(cell => cell.classList.add("hiddenLetter"));
+
+  // layout stabiliseren
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      startFallingLettersOverlay();
+    });
+  });
+}
+
+
+function eindeSpel() {
+  showMessage(
+    t("confirmNewGame"),
+    `
+      <div class="confirm-box">
+        <button id="jaBtn" class="btn btn-green">Ja</button>
+        <button id="neeBtn" class="btn btn-red">Nee</button>
+      </div>
+    `
+  );
+
+  document.getElementById("jaBtn").onclick = () => {
+    showMessage(t("defaultMessage"));
+    nieuwSpel();
+  };
+
+  document.getElementById("neeBtn").onclick = () => {
+    showMessage(t("defaultMessage"));
+  };
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -796,3 +839,155 @@ function startFireworks(callback) {
     if (callback) callback();
   }, 4000);
 }
+/*=================================================================*/
+
+function startFallingLettersOverlay() {
+  const canvas = document.getElementById("startAnimCanvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.classList.remove("hidden");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const cells = [...document.querySelectorAll("#grid .cell")];
+  const letters = [];
+
+  // 1. Lees letters + targetposities
+  for (const cell of cells) {
+    const letter = cell.textContent;
+    const rect = cell.getBoundingClientRect();
+
+    const targetX = rect.left + rect.width / 2;
+    const targetY = rect.top + rect.height / 2;
+
+    const startX = Math.random() * canvas.width;
+    const startY = -Math.random() * canvas.height * 0.5;
+
+    letters.push({
+      char: letter,
+      startX,
+      startY,
+      targetX,
+      targetY,
+      driftX: 0,
+      driftY: 0,
+      driftSpeedX: (Math.random() - 0.5) * 1.2,
+      driftSpeedY: (Math.random() - 0.5) * 0.6,
+      rotation: Math.random() * Math.PI * 2,
+      rotationSpeed: (Math.random() - 0.5) * 0.02,
+      size: 26,
+      progress: 0
+    });
+  }
+
+  // -------------------------
+  // DE ANIMATIE-FUNCTIE
+  // -------------------------
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let allDone = true;
+
+    for (const l of letters) {
+      l.progress += 0.012;
+
+      if (l.progress < 1) allDone = false;
+
+      const t = Math.min(1, l.progress);
+
+      // zachte landing
+      const ease = 1 - Math.pow(1 - t, 1);
+
+      // dwarrel sterft mooi uit
+      const landingPhase = Math.pow(1 - t, 2);
+
+      l.driftX += l.driftSpeedX * landingPhase;
+      l.driftY += l.driftSpeedY * landingPhase;
+      l.rotation += l.rotationSpeed * landingPhase;
+
+      const x = l.startX + (l.targetX - l.startX) * ease + l.driftX;
+      const y = l.startY + (l.targetY - l.startY) * ease + l.driftY;
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(l.rotation);
+      ctx.font = `18px Arial`;
+      ctx.fillStyle = "rgba(0,0,0,0.9)";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(l.char, 0, 0);
+      ctx.restore();
+    }
+
+    // -------------------------
+    // EINDE ANIMATIE
+    // -------------------------
+    if (!allDone) {
+      requestAnimationFrame(animate);
+    } else {
+
+      // 1. CLEAR
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 2. PERFECTE LANDING TEKENEN
+      for (const cell of cells) {
+        const rect = cell.getBoundingClientRect();
+        const letter = cell.textContent;
+
+        const style = getComputedStyle(cell);
+        const fontSize = style.fontSize;
+        const fontFamily = style.fontFamily;
+        const fontWeight = style.fontWeight;
+
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(0);
+        ctx.font = `${fontWeight} ${fontSize} ${fontFamily}`;
+        ctx.fillStyle = "rgba(0,0,0,0.9)";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(letter, 0, 0);
+        ctx.restore();
+      }
+
+      // 3. FREEZE FRAME
+      setTimeout(() => {
+
+        // 4. Canvas weg
+        canvas.classList.add("hidden");
+
+        // 5. Gridletters tonen
+        document.querySelectorAll("#grid .cell")
+          .forEach(cell => cell.classList.remove("hiddenLetter"));
+
+      }, 5);
+    }
+  }
+
+  // -------------------------
+  // START DE ANIMATIE
+  // -------------------------
+  animate();
+}
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  initToolbar();
+  startGame();
+});
+
+
+
+
+/*DEBUGGER*/
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === "d" || e.key === "D") {
+        toggleDebug();
+    }
+});

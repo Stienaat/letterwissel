@@ -1,6 +1,6 @@
 {
-  "name": "Letterwissel",
-  "short_name": "Letterwissel",
+  "name": "letterwissel",
+  "short_name": "letterwissel",
   "start_url": "/letterwissel/index.html",
   "scope": "/letterwissel/",
   "display": "standalone",

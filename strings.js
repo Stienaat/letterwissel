@@ -51,7 +51,7 @@ const translations = {
     language: "Language",
     footer: "© 2026 FS creations. All rights reserved. Not for commercial use.",
 
-    confirmNewGame: "Do you want to start a new game?",
+    confirmNewGame: "Do you want a new game?",
     confirmYes: "Yes",
     confirmNo: "No",
     defaultMessage: "How to play?  → Click info.",

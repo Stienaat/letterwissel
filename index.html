@@ -55,10 +55,11 @@
 			<span id="messageText"></span>
 			<div id="messageExtra"></div>
 		</div>
+ <div id="gridContainer" style="position:relative;">
+    <div id="grid"></div>
+</div>
 
-
-
-        <div id="grid"></div>
+<canvas id="startAnimCanvas" class="hidden"></canvas>
 
         <div class="toolbar4">
             <img src="images/logoFS.png" alt="FS Creations">
@@ -73,13 +74,14 @@
 <!-- Modal -->
 <div id="modal" class="hidden">
     <div id="modalContent">
-        <h6>V2.4</h6>
+	    <img style="height: 30px;" src="images/logoFS.png" alt="FS Creations">
+        <h6>Letter Wissel V2.4</h6>
         <button id="modalClose" style="margin:10px;">
             <img src="images/sluiten.png" alt="close">
         </button>
         <!-- ModalBody wordt door JS gevuld; geen i18n hier om dat niet te breken -->
         <div id="modalBody"></div>
-        <img style="height: 30px;" src="images/logoFS.png" alt="FS Creations">
+    
     </div>
 </div>
 
@@ -95,6 +97,20 @@
     navigator.serviceWorker.register("/letterwissel/serviceworker.js");
   }
 </script>
+<div id="debugPanel" style="
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.75);
+    color: #0f0;
+    font-family: monospace;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    z-index: 9999;
+    display: none;
+">
+</div>
 
 
 
