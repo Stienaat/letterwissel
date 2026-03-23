@@ -24,7 +24,6 @@ let longPressTimer = null;
 let longPressTriggered = false;
 let swapUitgevoerd = false;
 
-
 let debugVisible = false;
 
 /*DEBUGGER*/
@@ -40,11 +39,11 @@ function updateDebugPanel() {
 
     panel.innerHTML = `
         <b>DEBUG</b><br>
-    timerGestart: ${timerGestart}<br>
+		timerGestart: ${timerGestart}<br>
 		seconden: ${seconden}<br>
 		strafpunten: ${strafpunten}<br>	
         currentLanguage: ${currentLang}<br>
-    
+		level: ${level}<br>
     `;
 }
 
@@ -59,7 +58,14 @@ function randomSide() {
   return sides[Math.floor(Math.random() * sides.length)];
 }
 
+function highlightLevel(level) {
+    const toolbar = document.getElementById("toolbar");
+    if (!toolbar) return;
 
+    toolbar.querySelectorAll("button").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.level == level);
+    });
+}
 
 /* =========================
    2. I18N HELPERS
@@ -252,6 +258,7 @@ function loadGame() {
 
   updateScore();
   renderGrid();
+  highlightLevel(level);
 
   if (timerGestart) startTimer();
 
@@ -647,12 +654,11 @@ function initToolbar() {
 
 		  // UI updaten
 		  buttons.forEach(b => b.classList.remove("active"));
-		  btn.classList.add("active");
+	  btn.classList.add("active");
 
 		  clearMessage();   // <-- DIT is de fix
 		  nieuwSpel();
 		};
-
 
         nee.onclick = () => {
           showMessage(t("defaultMessage"));
@@ -721,7 +727,7 @@ async function nieuwSpel() {
   seconden = 0;
   timerGestart = false;
   updateScore();
-
+highlightLevel(level)
   woordBag = new ShuffleBagCooldown(woordenLijst, 3);
 
   maakGrid();
@@ -974,14 +980,10 @@ function startFallingLettersOverlay() {
 }
 
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
   initToolbar();
   startGame();
 });
-
-
 
 
 /*DEBUGGER*/
@@ -991,3 +993,4 @@ window.addEventListener("keydown", (e) => {
         toggleDebug();
     }
 });
+
