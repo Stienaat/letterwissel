@@ -185,7 +185,7 @@ body {
   border: 1px solid #0077ff;
   border-radius: 6px;
   font-size: 18px;
-  color: black;
+  color: #DCDCDC;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -200,6 +200,7 @@ body {
 
 .found {
   background-color: #C8E6C9;
+  color: #000000;
 }
 
 /* ---------------------------------------------------------
